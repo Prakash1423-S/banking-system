@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinCore Bank — NextGen Banking System & AI Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Top Global Announcement & Status Bar -->
+  <header class="top-nav">
+    <div class="nav-left">
+      <div class="brand-logo">
+        <div class="logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="2" x2="12" y2="22"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="brand-name">FinCore<span class="accent-text">AI</span></span>
+          <span class="brand-subtitle">Core Banking & Intelligence System</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active System Mode & Health Indicator -->
+    <div class="nav-center">
+      <div class="system-status-pill" id="backendStatusPill" title="Real-time backend synchronization status">
+        <span class="status-dot ping-dot"></span>
+        <span id="backendStatusText">Checking Server Connection...</span>
+      </div>
+    </div>
+
+    <div class="nav-right">
+      <div class="user-profile-badge">
+        <div class="avatar-circle">AM</div>
+        <div class="user-info">
+          <div class="user-name" id="userNameDisplay">Alex Morgan</div>
+          <div class="user-tier">Premier Member • ID #FC-8921</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="sub-nav">
+    <button class="nav-tab active" data-tab="dashboard">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+      Dashboard
+    </button>
+    <button class="nav-tab" data-tab="accounts">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+      Accounts & Cards
+    </button>
+    <button class="nav-tab" data-tab="transfer">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+      Transfer & Pay
+    </button>
+    <button class="nav-tab" data-tab="loans">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><line x1="12" y1="18" x2="12" y2="6"></line></svg>
+      Loan Calculator
+    </button>
+    <button class="nav-tab" data-tab="assistant">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+      Banking AI Assistant
+      <span class="badge-pulse">AI</span>
+    </button>
+  </nav>
+
+  <!-- Main Content Container -->
+  <main class="main-container">
+
+    <!-- ==================== TAB 1: DASHBOARD ==================== -->
+    <section id="tab-dashboard" class="tab-pane active">
+      <!-- Balance Metrics Row -->
+      <div class="metrics-grid">
+        <div class="metric-card primary-gradient">
+          <div class="metric-header">
+            <span class="metric-label">Total Liquid Net Worth</span>
+            <span class="badge-tag">FDIC Insured</span>
+          </div>
+          <div class="metric-value" id="totalBalanceDisplay">$18,090.95</div>
+          <div class="metric-footer">
+            <span class="trend-positive">↑ +4.2%</span> vs last month across 2 accounts
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-label">Monthly Inflow (Credits)</span>
+            <div class="icon-bubble green-bubble">↓</div>
+          </div>
+          <div class="metric-value green-text" id="monthlyInflowDisplay">$4,850.00</div>
+          <div class="metric-footer">Includes salary direct deposit & interest</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-label">Monthly Outflow (Debits)</span>
+            <div class="icon-bubble red-bubble">↑</div>
+          </div>
+          <div class="metric-value red-text" id="monthlyOutflowDisplay">$1,420.50</div>
+          <div class="metric-footer">Card purchases, bills & transfers</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-label">Credit Score Health</span>
+            <span class="badge-tag green">Excellent</span>
+          </div>
+          <div class="metric-value" id="creditScoreDisplay">785 <span class="sub-score">/ 850</span></div>
+          <div class="metric-footer">FICO Score 8 • Updated today</div>
+        </div>
+      </div>
+
+      <!-- Main Showcase: Card & Quick Banking Operations -->
+      <div class="showcase-grid">
+        <!-- Virtual Debit Card -->
+        <div class="card-showcase-box">
+          <div class="box-title">
+            <h3>Active Debit Card</h3>
+            <span class="card-status-badge" id="cardStatusBadge">Active</span>
+          </div>
+
+          <div class="fintech-debit-card" id="debitCardElement">
+            <div class="card-top">
+              <span class="card-bank-name">FinCore Platinum</span>
+              <div class="card-contactless">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
+              </div>
+            </div>
+
+            <div class="card-chip"></div>
+
+            <div class="card-number-wrapper">
+              <span class="card-number" id="cardNumberDisplay">•••• •••• •••• 4921</span>
+              <button class="toggle-card-btn" id="toggleCardNumberBtn" title="Show/Hide Card Number">👁</button>
+            </div>
+
+            <div class="card-bottom">
+              <div class="card-holder">
+                <span class="card-caption">CARDHOLDER</span>
+                <span class="card-name">ALEX MORGAN</span>
+              </div>
+              <div class="card-expiry">
+                <span class="card-caption">EXPIRES</span>
+                <span class="card-date">09/29</span>
+              </div>
+              <div class="card-cvv">
+                <span class="card-caption">CVV</span>
+                <span class="card-cvv-value" id="cardCvvDisplay">•••</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Controls -->
+          <div class="card-controls">
+            <button class="control-btn" id="toggleLockCardBtn">
+              <span id="lockIcon">🔒</span> <span id="lockText">Lock Card</span>
+            </button>
+            <button class="control-btn" id="viewCardLimitsBtn">
+              ⚙️ Spending Limits
+            </button>
+            <button class="control-btn" id="quickDepositBtn">
+              ➕ Quick Deposit
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick AI Assistant Mini-Widget -->
+        <div class="ai-spotlight-box">
+          <div class="ai-spotlight-header">
+            <div class="ai-badge-group">
+              <div class="bot-avatar-glow">🤖</div>
+              <div>
+                <h3>Ask FinCore AI</h3>
+                <p>Instant answers to any banking, loan, or account questions</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="quick-chips-container">
+            <button class="chip-btn" data-query="What is my balance?">💰 Check my balance</button>
+            <button class="chip-btn" data-query="What are current loan interest rates?">📈 Loan interest rates</button>
+            <button class="chip-btn" data-query="Difference between Savings and Checking accounts">🏦 Savings vs Checking</button>
+            <button class="chip-btn" data-query="What documents are needed for KYC?">📑 KYC documents</button>
+            <button class="chip-btn" data-query="What is an IFSC and SWIFT code?">🌐 SWIFT & IFSC codes</button>
+            <button class="chip-btn" data-query="How do I block a lost or stolen card?">🚨 Lost/Stolen card guide</button>
+          </div>
+
+          <form class="mini-ask-form" id="miniAskForm">
+            <input type="text" id="miniQueryInput" placeholder="Ask any question related to banking..." autocomplete="off">
+            <button type="submit" class="primary-btn">Ask AI</button>
+          </form>
+
+          <div class="mini-answer-container" id="miniAnswerContainer" style="display: none;">
+            <div class="answer-header">
+              <strong id="miniAnswerTitle">Answer</strong>
+              <button class="close-mini-btn" id="closeMiniAnswerBtn">✕</button>
+            </div>
+            <div class="answer-body" id="miniAnswerBody"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Transactions Section -->
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h3>Recent Transactions</h3>
+            <p class="section-subtitle">Real-time ledger updates with audit reference</p>
+          </div>
+          <div class="ledger-actions">
+            <button class="secondary-btn" id="openDepositModalBtn">Deposit Funds</button>
+            <button class="secondary-btn" id="openWithdrawModalBtn">Withdraw</button>
+            <button class="primary-btn" id="openTransferModalBtn">Send Money</button>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="banking-table" id="transactionsTable">
+            <thead>
+              <tr>
+                <th>Reference ID</th>
+                <th>Date & Time</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Account</th>
+                <th>Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="transactionTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 2: ACCOUNTS & CARDS ==================== -->
+    <section id="tab-accounts" class="tab-pane">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h3>Active Customer Accounts</h3>
+            <p class="section-subtitle">Overview of interest bearing and operational accounts</p>
+          </div>
+          <button class="primary-btn" id="openNewAccountBtn">+ Open New Account</button>
+        </div>
+
+        <div class="accounts-grid" id="accountsListGrid">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 3: TRANSFER & PAY ==================== -->
+    <section id="tab-transfer" class="tab-pane">
+      <div class="form-container-card">
+        <div class="form-header">
+          <h2>Electronic Funds Transfer</h2>
+          <p>Instant domestic ACH, internal transfer, or wire transfer</p>
+        </div>
+
+        <form id="transferForm" class="banking-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="transferSource">Transfer From</label>
+              <select id="transferSource" required>
+                <option value="savings">Savings Account (•••• 4921) - Balance: $14,850.75</option>
+                <option value="checking">Checking Account (•••• 8104) - Balance: $3,240.20</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="transferDestination">Destination / Beneficiary</label>
+              <select id="transferDestination" required>
+                <option value="checking">My Checking Account (•••• 8104)</option>
+                <option value="savings">My Savings Account (•••• 4921)</option>
+                <option value="external_sarah">Sarah Jenkins (•••• 9012 - Chase)</option>
+                <option value="external_david">David Miller (•••• 3341 - Wells Fargo)</option>
+                <option value="external_electric">City Power Utility (Bill Payment)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="transferAmount">Amount (USD $)</label>
+              <div class="input-prefix-wrapper">
+                <span class="currency-symbol">$</span>
+                <input type="number" id="transferAmount" min="1" max="100000" step="0.01" placeholder="0.00" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="transferMethod">Transfer Method</label>
+              <select id="transferMethod">
+                <option value="instant">Instant Internal Transfer (Zero Fee • Immediate)</option>
+                <option value="ach">ACH Electronic (1-2 Days • Free)</option>
+                <option value="wire">Domestic Wire (Immediate • $15.00)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="transferNote">Memo / Description</label>
+            <input type="text" id="transferNote" placeholder="e.g. Monthly rent, savings contribution, dinner" maxlength="60">
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="primary-btn large-btn">Confirm & Execute Transfer</button>
+            <button type="reset" class="secondary-btn">Reset Form</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 4: LOAN CALCULATOR ==================== -->
+    <section id="tab-loans" class="tab-pane">
+      <div class="loans-layout">
+        <div class="form-container-card">
+          <div class="form-header">
+            <h2>Loan EMI & Repayment Calculator</h2>
+            <p>Compute amortized monthly installments based on tenure and interest</p>
+          </div>
+
+          <div class="calculator-form">
+            <div class="form-group">
+              <label for="loanType">Loan Category</label>
+              <select id="loanType">
+                <option value="personal" data-rate="9.5">Personal Loan (9.50% APR)</option>
+                <option value="home" data-rate="6.75">Home Mortgage (6.75% APR)</option>
+                <option value="auto" data-rate="5.40">Auto Loan (5.40% APR)</option>
+                <option value="education" data-rate="7.25">Education Loan (7.25% APR)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <div class="slider-label-row">
+                <label for="loanAmount">Loan Amount ($)</label>
+                <span class="slider-val" id="loanAmountVal">$25,000</span>
+              </div>
+              <input type="range" id="loanAmount" min="1000" max="250000" step="1000" value="250000">
+            </div>
+
+            <div class="form-group">
+              <div class="slider-label-row">
+                <label for="loanTenure">Tenure (Years)</label>
+                <span class="slider-val" id="loanTenureVal">5 Years (60 Mo)</span>
+              </div>
+              <input type="range" id="loanTenure" min="1" max="30" step="1" value="5">
+            </div>
+
+            <div class="form-group">
+              <div class="slider-label-row">
+                <label for="loanRate">Interest Rate (% p.a.)</label>
+                <span class="slider-val" id="loanRateVal">9.50%</span>
+              </div>
+              <input type="number" id="loanRate" min="1" max="30" step="0.05" value="9.50">
+            </div>
+          </div>
+        </div>
+
+        <div class="loan-summary-card">
+          <h3>Repayment Projection</h3>
+          
+          <div class="emi-highlight">
+            <span class="emi-caption">Estimated Monthly EMI</span>
+            <div class="emi-amount" id="calculatedEmiDisplay">$525.04</div>
+          </div>
+
+          <div class="loan-breakdown-list">
+            <div class="breakdown-item">
+              <span>Principal Amount:</span>
+              <strong id="summaryPrincipal">$25,000.00</strong>
+            </div>
+            <div class="breakdown-item">
+              <span>Total Interest Payable:</span>
+              <strong id="summaryInterest" class="red-text">$6,502.40</strong>
+            </div>
+            <div class="breakdown-item">
+              <span>Total Repayment (Principal + Interest):</span>
+              <strong id="summaryTotal">$31,502.40</strong>
+            </div>
+          </div>
+
+          <button class="primary-btn full-width" id="applyLoanBtn">Apply for Pre-Approved Loan</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 5: BANKING AI ASSISTANT (Q&A) ==================== -->
+    <section id="tab-assistant" class="tab-pane">
+      <div class="chat-application-wrapper">
+        <!-- Chat Sidebar with Preset Questions -->
+        <aside class="chat-sidebar">
+          <h3>Knowledge Categories</h3>
+          <p class="sidebar-help">Click any query below to ask the banking assistant instantly:</p>
+
+          <div class="faq-group">
+            <div class="faq-group-title">💳 Accounts & Balances</div>
+            <button class="faq-pill" data-query="What is my current balance?">What is my current balance?</button>
+            <button class="faq-pill" data-query="What is the difference between Savings and Checking accounts?">Savings vs Checking differences</button>
+            <button class="faq-pill" data-query="What is the minimum balance requirement?">Minimum balance fees</button>
+          </div>
+
+          <div class="faq-group">
+            <div class="faq-group-title">💸 Transfers & Routing</div>
+            <button class="faq-pill" data-query="What is an IFSC and SWIFT code?">What are IFSC and SWIFT codes?</button>
+            <button class="faq-pill" data-query="What are the daily transfer limits?">What are the daily transfer limits?</button>
+            <button class="faq-pill" data-query="How does ACH transfer work?">How does ACH electronic transfer work?</button>
+          </div>
+
+          <div class="faq-group">
+            <div class="faq-group-title">📈 Loans & Mortgages</div>
+            <button class="faq-pill" data-query="What are the current interest rates for loans?">Current loan interest rates</button>
+            <button class="faq-pill" data-query="What is a good credit score to get a loan?">Credit score criteria (FICO)</button>
+            <button class="faq-pill" data-query="What is Fixed Deposit vs Recurring Deposit?">Fixed Deposit (FD) vs Recurring Deposit</button>
+          </div>
+
+          <div class="faq-group">
+            <div class="faq-group-title">🛡️ Security & Compliance</div>
+            <button class="faq-pill" data-query="What should I do if my card is lost or stolen?">Report lost or stolen debit card</button>
+            <button class="faq-pill" data-query="What documents are needed for KYC verification?">Mandatory KYC documents</button>
+            <button class="faq-pill" data-query="How does two factor authentication protect my account?">Two-factor authentication (2FA)</button>
+          </div>
+        </aside>
+
+        <!-- Main Conversational Chat Window -->
+        <div class="chat-main">
+          <div class="chat-header">
+            <div class="chat-header-info">
+              <div class="bot-badge">FinCore AI</div>
+              <div>
+                <strong>Banking Intelligence & Customer Support Assistant</strong>
+                <span class="chat-sub">24/7 Automated Financial Guidance • Real-time Account Context</span>
+              </div>
+            </div>
+            <div class="chat-header-actions">
+              <button class="icon-action-btn" id="clearChatBtn" title="Clear Chat History">🗑️ Clear Chat</button>
+            </div>
+          </div>
+
+          <div class="chat-messages" id="chatMessages">
+            <!-- Welcome message -->
+            <div class="chat-bubble bot-bubble">
+              <div class="bubble-avatar">🤖</div>
+              <div class="bubble-content">
+                <div class="bubble-title">Welcome to FinCore AI Banking Assistant! 👋</div>
+                <div class="bubble-text">
+                  I am connected directly to your core banking ledger. You can ask me questions about:
+                  <ul>
+                    <li><strong>Account Balances & History</strong> ("What is my balance?", "Show recent debits")</li>
+                    <li><strong>Transfers & Routing</strong> ("What is an IFSC / SWIFT code?", "Transfer limits")</li>
+                    <li><strong>Loans & Investments</strong> ("What are personal loan rates?", "Explain FD vs RD")</li>
+                    <li><strong>Security & Regulations</strong> ("How to lock my card?", "What are KYC documents?")</li>
+                  </ul>
+                  Feel free to type your question below or click any of the suggestions on the left!
+                </div>
+                <div class="bubble-timestamp">Just now</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Typing Indicator -->
+          <div class="typing-indicator" id="typingIndicator" style="display: none;">
+            <span></span><span></span><span></span>
+            <small>FinCore AI is analyzing banking knowledge base...</small>
+          </div>
+
+          <!-- Chat Input Controls -->
+          <form class="chat-input-area" id="chatForm">
+            <input 
+              type="text" 
+              id="chatInput" 
+              placeholder="Ask any banking question (e.g. 'What is my balance?', 'What are loan interest rates?')..."
+              autocomplete="off"
+              required
+            >
+            <button type="button" class="mic-btn" id="voiceInputBtn" title="Voice Dictation">🎙️</button>
+            <button type="submit" class="send-btn" id="sendBtn">
+              <span>Send</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== MODAL: DEPOSIT ==================== -->
+  <div class="modal-overlay" id="depositModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Deposit Funds</h3>
+        <button class="close-modal-btn" data-close="depositModal">✕</button>
+      </div>
+      <form id="depositForm" class="modal-form">
+        <div class="form-group">
+          <label for="depositAccount">Target Account</label>
+          <select id="depositAccount" required>
+            <option value="savings">Savings Account (•••• 4921)</option>
+            <option value="checking">Checking Account (•••• 8104)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="depositAmount">Deposit Amount ($)</label>
+          <div class="input-prefix-wrapper">
+            <span class="currency-symbol">$</span>
+            <input type="number" id="depositAmount" min="1" max="100000" step="0.01" placeholder="100.00" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="depositSource">Deposit Method</label>
+          <select id="depositSource">
+            <option value="Cash / ATM">ATM Cash Deposit</option>
+            <option value="Direct Deposit / Payroll">Direct Deposit / Employer Payroll</option>
+            <option value="Cheque Mobile Capture">Mobile Check Capture</option>
+            <option value="External Wire">External Wire Inflow</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="primary-btn">Complete Deposit</button>
+          <button type="button" class="secondary-btn" data-close="depositModal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: WITHDRAW ==================== -->
+  <div class="modal-overlay" id="withdrawModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Withdraw Cash</h3>
+        <button class="close-modal-btn" data-close="withdrawModal">✕</button>
+      </div>
+      <form id="withdrawForm" class="modal-form">
+        <div class="form-group">
+          <label for="withdrawAccount">From Account</label>
+          <select id="withdrawAccount" required>
+            <option value="savings">Savings Account (•••• 4921)</option>
+            <option value="checking">Checking Account (•••• 8104)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="withdrawAmount">Withdrawal Amount ($)</label>
+          <div class="input-prefix-wrapper">
+            <span class="currency-symbol">$</span>
+            <input type="number" id="withdrawAmount" min="1" max="5000" step="0.01" placeholder="50.00" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="withdrawChannel">Channel</label>
+          <select id="withdrawChannel">
+            <option value="ATM Cash Withdrawal">ATM Cash Dispenser</option>
+            <option value="Branch Teller">Branch Teller Counter</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="primary-btn">Authorize Withdrawal</button>
+          <button type="button" class="secondary-btn" data-close="withdrawModal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="bank_knowledge_base.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
